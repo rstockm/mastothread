@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastothread 0.9</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="jumbotron">
+        <h1 class="display-4">Mastothread</h1>
+        <p class="lead subtitle"></p>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Write Your Text</h3>
+            <textarea id="inputText" class="form-control" rows="10"></textarea>
+            <div class="settings mt-3 d-flex justify-content-between">
+                <div>
+                    Limit: <input type="number" id="charLimit" value="500" min="1">
+                    Pagination: <input type="checkbox" id="paginationCheckbox" checked>
+                </div>
+                <button id="applyLimit" class="btn btn-primary btn-copy-style">Apply</button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h3>Preview</h3>
+            <div id="previewArea"></div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="footer text-center py-4 mt-5">
+    <div class="container">
+        <span class="text-muted">Written by ChatGPT4 - Prompted by Ralf Stockmann. Host your own Mastothread - check </span>
+        <a href="https://github.com/rstockm/mastowall" target="_blank">GitHub</a>
+    </div>
+</footer>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="script.js"></script>
+
+</body>
+</html>

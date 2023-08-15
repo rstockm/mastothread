@@ -1,0 +1,96 @@
+.post-container {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.char-count {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.post-number {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  color: #888;
+}
+
+.btn-copy {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  font-size: 0.9rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+.btn-copy:hover {
+  background-color: #0056b3;
+}
+
+h3, textarea {  /* Assuming your headlines are h2 elements */
+  margin-bottom: 50px;  /* Adjust the value as needed */
+}
+
+#previewArea a {
+  color: #007bff; /* Bootstrap's default link color */
+  text-decoration: underline;
+}
+
+#charLimit {
+  width: 70px;
+  margin-right: 10px !important;
+}
+
+.btn-secondary {
+  margin-top: -5px;
+  left: 0;
+  font-size: 0.9rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.subtitle {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+.jumbotron {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.btn-copy.copied {
+  background-color: #28a745; /* Bootstrap green color */
+  border-color: #28a745;
+}
+
+.footer {
+  background-color: rgb(230, 230, 230);
+  color: #d2d2d2;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-top: 2px !important; /* reduce padding-top to half */
+  padding-bottom: 2px !important; /* reduce padding-bottom to half */
+  font-size: 0.9em;
+}
