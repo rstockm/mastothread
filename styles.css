@@ -40,6 +40,12 @@ h3, textarea {  /* Assuming your headlines are h2 elements */
   margin-bottom: 50px;  /* Adjust the value as needed */
 }
 
+ol {  /* Assuming your headlines are h2 elements */
+  margin-top: 50px;  /* Adjust the value as needed */
+  margin-bottom: 50px;  /* Adjust the value as needed */
+  color: #888;
+}
+
 #previewArea a {
   color: #007bff; /* Bootstrap's default link color */
   text-decoration: underline;
