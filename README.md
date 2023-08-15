@@ -9,7 +9,7 @@ Try it here: https://rstockm.github.io/mastothread/
 ## Features
 
 - **Text Splitting**: Automatically divides long texts into Mastodon-friendly chunks of up to 500 characters.
-- **Manual Splitting**: Insert `---` into your text to indicate manual split points.
+- **Manual Splitting**: Insert `===` into your text to indicate manual split points.
 - **Link, Hashtag, and Username Formatting**: Enhances readability by auto-formatting links, hashtags, and complete usernames.
 - **Adjustable Character Limit**: Customize the chunk size as per your preference.
 - **Real-time Preview**: Visualize how your text will appear as separate Mastodon posts.
@@ -27,7 +27,7 @@ Try it here: https://rstockm.github.io/mastothread/
 1. Navigate to the Mastothread web page.
 2. In the "Write your Text" section, input your lengthy text.
 3. Adjust the character limit or disable pagination if needed.
-4. Insert "---" for a manual split.
+4. Insert "===" for a manual split.
 5. View the real-time preview on the right. Use the "Copy" button to copy individual posts.
 6. Paste the posts into your Mastodon app of choice.
 7. Enjoy your Mastodon threads with ease!
