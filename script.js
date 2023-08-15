@@ -23,7 +23,7 @@ $(document).ready(function() {
         let chunks = [];
 
         // Split the text at manual split points first
-        const manualChunks = text.split('---');
+        const manualChunks = text.split('===');
         manualChunks.forEach(manualChunk => {
             manualChunk = manualChunk.trim();
             while (manualChunk.length) {
