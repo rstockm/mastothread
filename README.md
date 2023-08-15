@@ -26,10 +26,11 @@ Try it here: https://rstockm.github.io/mastothread/
 
 1. Navigate to the Mastothread web page.
 2. In the "Write your Text" section, input your lengthy text.
-3. Adjust the character limit or enable pagination if needed.
-4. View the real-time preview on the right. Use the "Copy" button to copy individual posts.
-5. Paste the posts into your Mastodon app of choice.
-6. Enjoy your Mastodon threads with ease!
+3. Adjust the character limit or disable pagination if needed.
+4. Insert "---" for a manual split.
+5. View the real-time preview on the right. Use the "Copy" button to copy individual posts.
+6. Paste the posts into your Mastodon app of choice.
+7. Enjoy your Mastodon threads with ease!
 
 ## AI-Guided Development: A Proof of Concept
 
