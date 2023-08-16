@@ -3,25 +3,22 @@
   margin-bottom: 50px;
 }
 
+.alert {
+  padding-top: 40px; /* Add space at the top to ensure text does not overlap with char-count and btn-copy */
+}
+
 .char-count {
   position: absolute;
-  top: -20px;
-  right: 0;
+  top: 4px;
+  right: 10px;
   font-size: 0.9rem;
   color: #555;
 }
 
-.post-number {
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 5px;
-  color: #888;
-}
-
 .btn-copy {
   position: absolute;
-  top: -30px;
-  left: 0;
+  top: 4px !important;
+  left: -1px !important;
   font-size: 0.9rem;
   background-color: #007bff;
   color: #fff;
@@ -34,6 +31,11 @@
 
 .btn-copy:hover {
   background-color: #0056b3;
+}
+
+.btn-copy.copied {
+  background-color: #28a745; /* Bootstrap green color */
+  border-color: #28a745;
 }
 
 h3, textarea {  /* Assuming your headlines are h2 elements */
@@ -99,4 +101,8 @@ ol {  /* Assuming your headlines are h2 elements */
   padding-top: 2px !important; /* reduce padding-top to half */
   padding-bottom: 2px !important; /* reduce padding-bottom to half */
   font-size: 0.9em;
+}
+
+.copied-post .alert {
+  background-color: #e6ffe6; /* This is a very light green tint */
 }
