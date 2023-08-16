@@ -3,7 +3,8 @@
 An intuitive web tool to seamlessly split and format long texts into manageable chunks for Mastodon threads.
 Try it here: https://rstockm.github.io/mastothread/
 
-<img width="600" alt="image" src="https://github.com/rstockm/mastothread/assets/3195116/6e97e506-e4cb-4672-ab22-6e551b01de56">
+<img width="600" alt="Screenshot of Mastothread" src="https://github.com/rstockm/mastothread/assets/3195116/6dbf2a7d-55de-4afa-b3a8-12fa9627a3cf">
+
 
 
 ## Features
