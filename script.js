@@ -79,9 +79,9 @@ $(document).ready(function() {
 
             $('#previewArea').append(`
                 <div class="post-container">
-                    <span class="char-count">${charCount} chars</span>
-                    <button class="btn btn-secondary btn-copy" data-text="${chunk}${paginationText}">Copy</button>
                     <div class="alert alert-secondary">
+                        <button class="btn btn-secondary btn-copy" data-text="${chunk}${paginationText}">Copy</button>
+                        <span class="char-count">${charCount} chars</span>
                         ${formattedChunk}
                         ${paginationText ? `<br><span class="post-number">${paginationText}</span>` : ''}
                     </div>
@@ -104,8 +104,18 @@ $(document).ready(function() {
         document.execCommand('copy');
         textarea.remove();
     
+        // Change the button text to "Copied"
+        $(this).text('Copied');
+        // Reset button text after 2 seconds
+        setTimeout(() => {
+            $(this).text('Copy');
+        }, 2000);
+
         // Add the copied class to the button to change its color
         $(this).addClass('copied');
+
+        // Add the copied-post class to the parent post-container to change its background
+        $(this).closest('.post-container').addClass('copied-post');
     });
     
     
