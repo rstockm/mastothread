@@ -38,8 +38,9 @@
   border-color: #28a745;
 }
 
-h3, textarea {  /* Assuming your headlines are h2 elements */
-  margin-bottom: 50px;  /* Adjust the value as needed */
+h3, textarea {  /* Assuming your headlines are h3 elements */
+  margin-bottom: 15px;  /* Adjust the value as needed */
+  margin-top: 15px;  /* Adjust the value as needed */
 }
 
 ol {  /* Assuming your headlines are h2 elements */
