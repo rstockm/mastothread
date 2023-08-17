@@ -159,5 +159,6 @@ function changeSubtitle() {
 $(".subtitle").text(subtitles[currentSubtitleIndex]);
 setInterval(changeSubtitle, 10000);
 
-
+$('#inputText').trigger('input');
+    
 });
