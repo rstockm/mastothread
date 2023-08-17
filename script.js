@@ -57,8 +57,10 @@ $(document).ready(function() {
         chunk = chunk.replace(/\n/g, '<br>');  // Respect newlines
         chunk = chunk.replace(/(http[s]?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
         chunk = chunk.replace(/#(\w+)/g, '<a href="https://mastodon.social/tags/$1" target="_blank">#$1</a>');
-        chunk = chunk.replace(/@(\w+)@([\w.-]+)/g, '<a href="https://$2/@$1" target="_blank">@$1@$2</a>'); // For @username@domain
-        chunk = chunk.replace(/@(\w+)(?![\w@])/g, '<a href="https://mastodon.social/@$1" target="_blank">@$1</a>'); // For just @username
+        // For @username@domain
+        chunk = chunk.replace(/@(\w+)@([\w.-]+)/g, '<a href="https://$2/@$1" target="_blank">@$1@$2</a>');
+        // For just @username (and ensuring it does not have a @ following it)
+        chunk = chunk.replace(/@(\w+)(?=[^@])/g, '<a href="https://mastodon.social/@$1" target="_blank">@$1</a>');
 
         return chunk;
     }
