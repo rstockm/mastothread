@@ -10,6 +10,14 @@ $(document).ready(function() {
         };
     }
 
+    function escapeHTML(text) {
+    return text.replace(/&/g, '&amp;')  // First, escape ampersands
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&#39;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;');
+    }
+
     function getCharacterLimit() {
         let limit = parseInt($('#charLimit').val(), 10);
         if (isNaN(limit) || limit <= 0) {
@@ -90,7 +98,7 @@ $(document).ready(function() {
             $('#previewArea').append(`
                 <div class="post-container">
                     <div class="alert alert-secondary">
-                        <button class="btn btn-secondary btn-copy" data-text="${chunk}${paginationText}">Copy</button>
+                        <button class="btn btn-secondary btn-copy" data-text="${escapeHTML(chunk + paginationText)}">Copy</button>
                         <span class="char-count">${charCount} chars</span>
                         ${formattedChunk}
                         ${paginationText ? `<br><span class="post-number">${paginationText}</span>` : ''}
