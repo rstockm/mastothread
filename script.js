@@ -65,8 +65,8 @@ $(document).ready(function() {
         chunk = chunk.replace(/\n/g, '<br>');  // Respect newlines
         chunk = chunk.replace(/(http[s]?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
         
-        // Replace @username@domain format
-        chunk = chunk.replace(/@(\w+)@([\w.-]+[.][a-z]{2,})/g, function(match, username, domain) {
+        // Replace @username@domain format - fixed to properly handle full domain names
+        chunk = chunk.replace(/@(\w+)@([\w.-]+\.[a-z]{2,})(?=\s|$|[,.;!?])/g, function(match, username, domain) {
             return `<a href="https://${domain}/@${username}" target="_blank">${match}</a>`;
         });
         
