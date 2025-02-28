@@ -65,10 +65,34 @@ $(document).ready(function() {
         chunk = chunk.replace(/\n/g, '<br>');  // Respect newlines
         chunk = chunk.replace(/(http[s]?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
         
-        // Replace @username@domain format - fixed to properly handle full domain names
-        chunk = chunk.replace(/@(\w+)@([\w.-]+\.[a-z]{2,})(?=\s|$|[,.;!?])/g, function(match, username, domain) {
-            return `<a href="https://${domain}/@${username}" target="_blank">${match}</a>`;
-        });
+        // Create a temporary format to avoid conflicts with other replacements
+        let tempChunk = '';
+        let lastIndex = 0;
+        
+        // Custom replacement for @username@domain format
+        const regex = /@(\w+)@([\w.-]+\.[a-z]{2,})/g;
+        let match;
+        
+        while ((match = regex.exec(chunk)) !== null) {
+            const fullMatch = match[0];
+            const username = match[1];
+            const domain = match[2];
+            
+            // Add text before the match
+            tempChunk += chunk.substring(lastIndex, match.index);
+            
+            // Add the formatted match
+            tempChunk += `<a href="https://${domain}/@${username}" target="_blank">${fullMatch}</a>`;
+            
+            // Update lastIndex to continue after this match
+            lastIndex = regex.lastIndex;
+        }
+        
+        // Add remaining text
+        tempChunk += chunk.substring(lastIndex);
+        
+        // Use the temporary chunk for further processing
+        chunk = tempChunk;
         
         // Now replace hashtags and simple @username
         chunk = chunk.replace(/#(\w+)/g, '<a href="https://mastodon.social/tags/$1" target="_blank">#$1</a>');
