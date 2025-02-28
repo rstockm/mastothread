@@ -62,45 +62,153 @@ $(document).ready(function() {
     }
 
     function formatChunk(chunk) {
-        chunk = chunk.replace(/\n/g, '<br>');  // Respect newlines
-        chunk = chunk.replace(/(http[s]?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+        // First, create a working copy of the chunk
+        let workingChunk = chunk;
         
-        // Create a temporary format to avoid conflicts with other replacements
-        let tempChunk = '';
+        // Normalize line breaks in the input to make processing consistent
+        // Convert all line endings to '\n' for consistent processing
+        workingChunk = workingChunk.replace(/\r\n|\r/g, '\n');
+        
+        // Split the text by newlines and process each line separately
+        const lines = workingChunk.split('\n');
+        const processedLines = [];
+        
+        for (let line of lines) {
+            // Handle empty lines
+            if (!line.trim()) {
+                processedLines.push('');
+                continue;
+            }
+            
+            // Process the line
+            let processedLine = processLine(line);
+            processedLines.push(processedLine);
+        }
+        
+        // Join the lines back with <br> tags
+        return processedLines.join('<br>');
+    }
+    
+    // Helper function to process a single line of text
+    function processLine(line) {
+        // Array to hold text parts
+        const parts = [];
         let lastIndex = 0;
         
-        // Custom replacement for @username@domain format
-        const regex = /@(\w+)@([\w.-]+\.[a-z]{2,})/g;
+        // Track special regions to avoid processing twice
+        let processedRegions = [];
+        
+        // First, identify URLs - we need to mark them to avoid conflicts with mentions inside URLs
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
         let match;
         
-        while ((match = regex.exec(chunk)) !== null) {
-            const fullMatch = match[0];
-            const username = match[1];
-            const domain = match[2];
+        while ((match = urlRegex.exec(line)) !== null) {
+            const url = match[0];
+            const start = match.index;
+            const end = start + url.length;
             
-            // Add text before the match
-            tempChunk += chunk.substring(lastIndex, match.index);
+            processedRegions.push({
+                start: start,
+                end: end,
+                type: 'url',
+                content: url,
+                html: `<a href="${url}" target="_blank">${url}</a>`
+            });
+        }
+        
+        // Find all @username@domain mentions that are NOT inside URLs
+        const fullMentionRegex = /@(\w+)@([\w.-]+\.[a-z]{2,})/g;
+        
+        while ((match = fullMentionRegex.exec(line)) !== null) {
+            const start = match.index;
+            const end = start + match[0].length;
             
-            // Add the formatted match
-            tempChunk += `<a href="https://${domain}/@${username}" target="_blank">${fullMatch}</a>`;
+            // Check if this mention is inside a URL
+            const isInsideProcessedRegion = processedRegions.some(
+                region => start >= region.start && end <= region.end
+            );
             
-            // Update lastIndex to continue after this match
-            lastIndex = regex.lastIndex;
+            if (!isInsideProcessedRegion) {
+                processedRegions.push({
+                    start: start,
+                    end: end,
+                    type: 'fullMention',
+                    username: match[1],
+                    domain: match[2],
+                    content: match[0],
+                    html: `<a href="https://${match[2]}/@${match[1]}" target="_blank">${match[0]}</a>`
+                });
+            }
+        }
+        
+        // Find all simple @username mentions that are NOT inside URLs or full mentions
+        const simpleMentionRegex = /@(\w+)(?!@)/g;
+        
+        while ((match = simpleMentionRegex.exec(line)) !== null) {
+            const start = match.index;
+            const end = start + match[0].length;
+            
+            // Check if this mention is inside another processed region
+            const isInsideProcessedRegion = processedRegions.some(
+                region => start >= region.start && end <= region.end
+            );
+            
+            if (!isInsideProcessedRegion) {
+                processedRegions.push({
+                    start: start,
+                    end: end,
+                    type: 'simpleMention',
+                    username: match[1],
+                    content: match[0],
+                    html: `<a href="https://mastodon.social/@${match[1]}" target="_blank">${match[0]}</a>`
+                });
+            }
+        }
+        
+        // Find all hashtags that are NOT inside URLs
+        const hashtagRegex = /#(\w+)/g;
+        
+        while ((match = hashtagRegex.exec(line)) !== null) {
+            const start = match.index;
+            const end = start + match[0].length;
+            
+            // Check if this hashtag is inside a URL
+            const isInsideProcessedRegion = processedRegions.some(
+                region => start >= region.start && end <= region.end
+            );
+            
+            if (!isInsideProcessedRegion) {
+                processedRegions.push({
+                    start: start,
+                    end: end,
+                    type: 'hashtag',
+                    tag: match[1],
+                    content: match[0],
+                    html: `<a href="https://mastodon.social/tags/${match[1]}" target="_blank">${match[0]}</a>`
+                });
+            }
+        }
+        
+        // Sort all processed regions by start position
+        processedRegions.sort((a, b) => a.start - b.start);
+        
+        // Rebuild the string with all replacements
+        lastIndex = 0;
+        for (const region of processedRegions) {
+            // Add text before this region
+            parts.push(line.substring(lastIndex, region.start));
+            
+            // Add the formatted HTML for this region
+            parts.push(region.html);
+            
+            lastIndex = region.end;
         }
         
         // Add remaining text
-        tempChunk += chunk.substring(lastIndex);
+        parts.push(line.substring(lastIndex));
         
-        // Use the temporary chunk for further processing
-        chunk = tempChunk;
-        
-        // Now replace hashtags and simple @username
-        chunk = chunk.replace(/#(\w+)/g, '<a href="https://mastodon.social/tags/$1" target="_blank">#$1</a>');
-        
-        // Avoid replacing usernames that have already been replaced with their domain.
-        chunk = chunk.replace(/@(?!.*<a href)(\w+)/g, '<a href="https://mastodon.social/@$1" target="_blank">@$1</a>');
-        
-        return chunk;
+        // Join all parts back together
+        return parts.join('');
     }
 
     $('#inputText').on('input', debounce(function() {
